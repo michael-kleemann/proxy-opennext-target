@@ -3,17 +3,12 @@
 export default $config({
   app(input) {
     return {
-      name: "monorepo-template",
-      removal: input?.stage === "production" ? "retain" : "remove",
+      name: "proxy-opennext-target",
+      removal: "remove",
       home: "aws",
     };
   },
   async run() {
-    await import("./infra/storage");
-    const api = await import("./infra/api");
-
-    return {
-      api: api.myApi.url,
-    };
+    new sst.aws.Nextjs("ProxyOpennextTarget", {openNextVersion: "3.1.0"});
   },
 });
